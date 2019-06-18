@@ -24,4 +24,9 @@ extern  void IO_Init(void);
 #define SIN_6    DDRB_DDRB5
  // B口为开关量输入
 
+
+void    gpio_set   (char IO,           uint8 data);    //设置引脚
+
+uint8   gpio_get   (char IO);                          //??????
+#endif
 #endif

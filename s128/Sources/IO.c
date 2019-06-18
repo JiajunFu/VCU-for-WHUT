@@ -31,3 +31,19 @@
   
   
 }
+void gpio_set (char IO,uint8 data)
+{
+    if(data == 0)
+    {
+        IO=0x00;// GPIO PDOR 管脚号 清0，即对应管脚配置为端口输出低电平
+    }
+    else
+    {
+        IO=0x01; // GPIO PDOR 管脚号 置1，即对应管脚配置为端口输出高电平
+    }
+}
+
+uint8 gpio_get(IO)
+{
+    return IO;// ?? GPIO PDIR ptxn ??,?????????
+}
