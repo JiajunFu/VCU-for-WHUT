@@ -46,25 +46,25 @@ uint8 Start_flag=0;                                                           //
   Init_all();                                                               //设置中断优先级
   while (Pre_flag==0)                                                        //预充
       {
-        if (gpio_get(PTB1)==1)
+        if (GPIO_Get(S1IN,PRT,2)==1)
          {
-          gpio_set(PTB4,1);
+          GPIO_Set(W4,PRT,3,1);
           Pre_flag=1;
          }    
       }
   while (Start_flag==0)                                                      //判断第一次进入待驶状态
       {
-        if (gpio_get(PTB2)==1)
+        if (GPIO_Get(S2IN,PRT,1)==1)
          {
-          gpio_set (PTB5 ,1);
-          gpio_set (PTB20,1);
+          GPIO_Set(W5,PRT,4,1);
+          GPIO_Set(W1,PRT,0,1);
           delay1ms(3000);
-          gpio_set (PTB20,0);
+          GPIO_Set(W1,PRT,0,0);
           Start_flag=1;
          }
       }
   while(1) {
-          	if(start_flg)
+          	if(Start_flag)
 			{
 				Drive();
 			}
@@ -90,7 +90,9 @@ void drive (void)
 {
   uint16 PedUpLimit=4095;                                               //加速踏板上极限位置（可自己设置）
   uint16 PedDownLimit=0;                                                //加速踏板下极限位置（可自己设置）
-  uint16 PedMax=200;                                                     //加速踏板误差最大值（根据具体情况设置）
+  uint16 PedMax=200; 
+   ACC_1= ((unsigned int)(AD_value[1]);
+   ACC_2= ((unsigned int)(AD_value[2]);                                                      //加速踏板误差最大值（根据具体情况设置）
   if (ACC_1<PedDownLimit||ACC_2<PedDownLimit||ACC_1>PedUpLimit||ACC_2>PedUpLimit)    //判断加速踏板是否超程
      Torque=0;
   else if (fabs(ACC_1-ACC_2)>PedMax)                             //判断误差是否过大
@@ -99,23 +101,24 @@ void drive (void)
      Torque=0;
   else
      {
-       if (gpio_get(PTB3)==1)                                             //判断是否按下倒车按钮
+       if (GPIO_Get(S3IN,PRT,0)==1)                                             //判断是否按下倒车按钮
           {
-            gpio_set (PTB6,0);
-            gpio_set (PTB7,1);
-            gpio_set (PTB21,1);                                             //蜂鸣器响
-            gpio_set (PTB22,1);                                            //倒车灯亮
+            GPIO_Set(W6,PRT,5,0);
+            GPIO_Set(W7,PRT,6,1);
+            GPIO_Set(W3,PRT,2,1);                                            //蜂鸣器响
+            GPIO_Set(W2,PRT,1,1);;                                            //倒车灯亮
             Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit)
           }
        else
           {
-            gpio_set (PTB6,1);
-            gpio_set (PTB7,0);
-            gpio_set (PTB21,0);                                             //蜂鸣器关
-            gpio_set (PTB22,0);                                            //倒车灯灭
+            GPIO_Set(W6,PRT,5,1);
+            GPIO_Set(W7,PRT,6,0);
+            GPIO_Set(W3,PRT,2,0);                                            //蜂鸣器响
+            GPIO_Set(W2,PRT,1,0);;                                            //倒车灯灭
             Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit)
           }
      }
+     
       /* PWM输出torque值给电机
 }
 

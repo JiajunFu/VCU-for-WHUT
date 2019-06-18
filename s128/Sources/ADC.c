@@ -28,13 +28,18 @@ void AD_Get_value(void)
                                  
   {if(c==0) 
     {
-     AD_value[0]  = ATD0DR0L;
-     AD_value[1]  = ATD0DR0H;
+     ATD0CTL5 = 0x01;    //×ª»»AD01
+   
+    AD_value[1] = ATD0DR0;
+       
     }                                  // ACC_1
    else if(c==1) 
     {
-     AD_value[2]  = ATD0DR0L;
-     AD_value[3]  = ATD0DR0H;          // ACC_2
+     ATD0CTL5 = 0x02;    //×ª»»AD02
+   
+    AD_value[2]= ATD0DR0;
+      
+               // ACC_2
     }
        
   }
