@@ -12,7 +12,7 @@ void ADC_Init(void)
  
   ATD0CTL3 = 0x08;            // 单通道，转换结果映射
   ATD0CTL4 = 0xb7;            // 选用8位精度模数转换,AD模块时钟频率为2MHz
-  ATD0CTL5 = 0xa0;            // AD0、AD1、AD2三个通道采样,右对齐模式
+            
   ATD0CTL2 = 0x40;            // 启动A/D转换,快速清零,禁止中断
 }                                          *
 
@@ -22,7 +22,7 @@ void ADC_Init(void)
 
 void AD_Get_value(void)
 {
-  ATD0CTL5 =ATD0CTL5+c;               // 启动转换
+               
              
  while(!ATD0STAT0_SCF);               // 等待AD转换
                                  

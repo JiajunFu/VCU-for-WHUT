@@ -22,6 +22,7 @@ void Init_all(void)
   ADC_Init();
   CAN_Init();
   PIT_Init();
+  INIT_PLL();
 }
 /*************************************************************/
 /*                         延时函数                          */
@@ -119,6 +120,6 @@ void drive (void)
           }
      }
      
-      /* PWM输出torque值给电机
+      /* PWM输出torque值给电机*/
 }
 
