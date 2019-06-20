@@ -6,7 +6,7 @@
 /*************************************************************/
 /*                      初始化锁相环                         */
 /*************************************************************/
-void INIT_PLL(void) 
+void PLL_Init(void) 
 {
     CLKSEL &= 0x7f;       //set OSCCLK as sysclk  &与，避免其他位受到影响
     PLLCTL &= 0x8F;       //Disable PLL circuit

@@ -1,6 +1,7 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
 #include "lib.h"
+
 typedef unsigned char uint8;
 /*********加速踏板输入********/
 unsigned int ACC_1;      //油门传感器1
@@ -17,12 +18,12 @@ void drive (void);
 void Init_all(void) 
 {
   IO_Init();
-  INIT_PLL();
+  PLL_Init();
   ECT_Init();
   ADC_Init();
-  CAN_Init();
+//  CAN_Init();
   PIT_Init();
-  INIT_PLL();
+ ;
 }
 /*************************************************************/
 /*                         延时函数                          */
@@ -64,10 +65,10 @@ uint8 Start_flag=0;                                                           //
           Start_flag=1;
          }
       }
-  while(1) {
+  for(;;) {
           	if(Start_flag)
 			{
-				Drive();
+				drive();
 			}
 			else
 			{
@@ -92,13 +93,11 @@ void drive (void)
   uint16 PedUpLimit=4095;                                               //加速踏板上极限位置（可自己设置）
   uint16 PedDownLimit=0;                                                //加速踏板下极限位置（可自己设置）
   uint16 PedMax=200; 
-   ACC_1= ((unsigned int)(AD_value[1]);
-   ACC_2= ((unsigned int)(AD_value[2]);                                                      //加速踏板误差最大值（根据具体情况设置）
+  ACC_1= ((unsigned int)(AD_value[1]));
+  ACC_2= ((unsigned int)(AD_value[2]));                                                      //加速踏板误差最大值（根据具体情况设置）
   if (ACC_1<PedDownLimit||ACC_2<PedDownLimit||ACC_1>PedUpLimit||ACC_2>PedUpLimit)    //判断加速踏板是否超程
      Torque=0;
   else if (fabs(ACC_1-ACC_2)>PedMax)                             //判断误差是否过大
-     Torque=0;
-  else if (Brake_flag==1)
      Torque=0;
   else
      {
@@ -108,7 +107,7 @@ void drive (void)
             GPIO_Set(W7,PRT,6,1);
             GPIO_Set(W3,PRT,2,1);                                            //蜂鸣器响
             GPIO_Set(W2,PRT,1,1);;                                            //倒车灯亮
-            Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit)
+            Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit);
           }
        else
           {
@@ -116,7 +115,7 @@ void drive (void)
             GPIO_Set(W7,PRT,6,0);
             GPIO_Set(W3,PRT,2,0);                                            //蜂鸣器响
             GPIO_Set(W2,PRT,1,0);;                                            //倒车灯灭
-            Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit)
+            Torque=((ACC_1+ACC_2)/2-PedDownLimit)*4095/(PedUpLimit-PedDownLimit);
           }
      }
      

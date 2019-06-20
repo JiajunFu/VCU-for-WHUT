@@ -53,8 +53,8 @@ interrupt VectorNumber_Vpit0 void PIT_66U(void)
      if(a==5) 
     { 
        a=0;
-       send_ctr=1-send_ctr;
-       CAN_send_ready(); 
+//       send_ctr=1-send_ctr;
+//       CAN_send_ready(); 
         
      }
        

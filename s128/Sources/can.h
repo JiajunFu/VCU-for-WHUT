@@ -1,4 +1,4 @@
-struct can_msg     //发送报文的结构体
+/*struct can_msg     //发送报文的结构体
 {
     unsigned int id;
     Bool RTR;
@@ -9,4 +9,4 @@ struct can_msg     //发送报文的结构体
 
 void INIT_CAN0(void);
 Bool MSCAN0SendMsg(struct can_msg msg);
-Bool MSCAN0GetMsg(struct can_msg *msg);
+Bool MSCAN0GetMsg(struct can_msg *msg); */
