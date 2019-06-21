@@ -9,3 +9,4 @@
 #include "MC9S12XS128.h"
 #include "GPIO.h"
 #include "math.h"
+#include "PWM.h"

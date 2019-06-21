@@ -14,11 +14,27 @@ void ADC_Init(void)
   ATD0CTL4 = 0xb7;            // 选用8位精度模数转换,AD模块时钟频率为2MHz
             
   ATD0CTL2 = 0x40;            // 启动A/D转换,快速清零,禁止中断
-}                                          *
+}                                          
 
 /*************************************************************/
 /*                        起动AD转换                         */
 /*************************************************************/
+uint16 ADCValue(uint8 channel)
+    {
+      uint16 temp;                        //暂存A/D转换的结果
+    	ATD0CTL5 = channel;
+
+    	                                    //取A/D转换结果
+    //	while (1)
+      for(;;)                                    
+    	if ((ATD0STAT0&(1<< 7)) != 0)       //判断ATDSTAT0的第7位是否为1
+    	{
+    	    temp = ATD0DR0;                 //从A/D数据寄存器0中读12位数据
+    	    break;
+    	}
+    	return  temp;
+    }
+
 
 void AD_Get_value(void)
 {

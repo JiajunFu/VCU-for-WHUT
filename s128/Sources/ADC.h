@@ -1,10 +1,11 @@
 #ifndef  __ADC_XS128__
 #define  __ADC_XS128__
+#include "lib.h"
 
 extern unsigned char AD_value[8];    //结果寄存器
-extern void ADC_Init(void);          //初始化--多通道，单次转换 
-extern void AD_Get_value(void);      //将AD结果存入寄存器
-
+void ADC_Init(void);          //初始化--多通道，单次转换 
+void AD_Get_value(void);      //将AD结果存入寄存器
+uint16 ADCValue(uint8 channel);
 extern unsigned int ACC_1;      //油门传感器1
 extern unsigned int ACC_2;      //油门传感器2
 extern unsigned int ACC;        //油门传感器1,2之和
